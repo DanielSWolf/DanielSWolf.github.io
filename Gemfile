@@ -15,6 +15,9 @@ gem "minima", "~> 2.5"
 # gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
+  # Must be first, see https://github.com/asciidoctor/jekyll-asciidoc#user-content-plugin-ordering
+  gem 'jekyll-asciidoc'
+  
   gem "jekyll-feed", "~> 0.12"
 end
 

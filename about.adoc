@@ -1,0 +1,9 @@
+= About
+:page-layout: page
+:page-permalink: /about/
+
+Hi! I'm Daniel Wolf, a software developer in Munch, Germany. I'm the author of https://github.com/DanielSWolf/rhubarb-lip-sync[Rhubarb Lip Sync].
+
+I like old adventure games and processing sound. On this blog, I'll record some of my insights. Maybe they can be helpful -- if not to others, then at least to myself in a few years' time!
+
+image::https://www.gravatar.com/avatar/46f382e45b658847133427af19b04d8c?s=200[]
