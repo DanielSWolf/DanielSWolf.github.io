@@ -1,0 +1,30 @@
+= Running 16-bit DOS CLI tools on Windows 10 64-bit (without DOSBox)
+:page-layout: post
+
+I recently found a real treasure: http://sciprogramming.com/community/index.php?topic=1631.0[An archive] containing many of the tools used at Sierra On-Line to create their games. All of these are 16-bit DOS command-line tools. So I opened a command prompt and tried to run one of them. Only to receive this message:
+
+> This version of C:\Documents\Sammlungen\Software\Multimedia\scitools\ATOS.EXE is not compatible with the version of Windows you're running. Check your computer's system information and then contact the software publisher.
+
+image::unsupported-16-bit-application.png[Unsupported 16-Bit Application]
+
+A little googling informed me that while it is https://www.groovypost.com/howto/enable-16-bit-application-support-windows-10/[possible to natively run 16-bit applications] on _32-bit versions_ of Windows 10, the same is not possible for 64-bit versions. And really, who uses a 32-bit Windows 10?
+
+The popular solutions seem to be DOSBox or a virtual machine. This is fine for games or tools that you rarely use. But I wanted to automate these tools by calling them from a script, along with other (32/64-bit) CLI tools on my machine. Neither DOSBox nor a virtual machine make it easy to do that.
+
+Finally, I found a tool called _MS-DOS Player for Win32-x64_ by Takeda Toshiya. That's exactly what I'd been looking for, and it's been working great!
+
+Here's how you use it:
+
+. Go to http://takeda-toshiya.my.coocan.jp/msdos.
+
+. Download the ZIP file (_msdos.zip_) and extract it.
+
+. Within the _binaries_ directory, you'll find a number of subdirectories. These are various versions of the same tool. Each directory name first specifies the machine it emulates (8086/80286/80386/80486...), then whether it's a 32 or 64-bit application. I used _i486_x64_, which gives me an emulated 80486 processor, which should be good enough for most DOS tools.
++
+image::ms-dos-player-binaries.png[]
++
+NOTE: The readme file states that the _i86_x64_ executable is faster than the others. So if your 16-bit application doesn't neet the features of the more powerful CPUs and you want maximum speed, use this one. Then again, even _i486_x64_ runs _much_ faster than DOSBox for me.
+
+. Each directory contains a file called _msdos.exe_. To run any 16-bit application, pass it as an argument, like this: `msdos my-tool arg1 arg2...`
+
+. For convenience, it might be a good idea to add the binary directory of your choice to your PATH variable.
