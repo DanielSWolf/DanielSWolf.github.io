@@ -7,7 +7,7 @@
 title: Daniel Wolf's development blog
 description: Random thoughts of a software developer
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://danielswolf.github.io/"
 twitter_username: Daniel_S_Wolf
 github_username:  DanielSWolf
 
@@ -43,3 +43,6 @@ asciidoc: {}
 asciidoctor:
   attributes:
     imagesdir: /images
+
+disqus:
+  shortname: dwolfdevblog
