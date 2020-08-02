@@ -48,3 +48,6 @@ disqus:
   shortname: dwolfdevblog
 
 show_excerpts: true
+
+feed:
+  excerpt_only: true
