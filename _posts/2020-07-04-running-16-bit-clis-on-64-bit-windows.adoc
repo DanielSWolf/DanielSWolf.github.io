@@ -5,7 +5,7 @@ I recently found a real treasure: http://sciprogramming.com/community/index.php?
 
 > This version of C:\Documents\Sammlungen\Software\Multimedia\scitools\ATOS.EXE is not compatible with the version of Windows you're running. Check your computer's system information and then contact the software publisher.
 
-image::unsupported-16-bit-application.png[Unsupported 16-Bit Application]
+image:unsupported-16-bit-application.png[Unsupported 16-Bit Application]
 
 A little googling informed me that while it is https://www.groovypost.com/howto/enable-16-bit-application-support-windows-10/[possible to natively run 16-bit applications] on _32-bit versions_ of Windows 10, the same is not possible for 64-bit versions. And really, who uses a 32-bit Windows 10?
 
@@ -21,7 +21,7 @@ Here's how you use it:
 
 . Within the _binaries_ directory, you'll find a number of subdirectories. These are various versions of the same tool. Each directory name first specifies the machine it emulates (8086/80286/80386/80486...), then whether it's a 32 or 64-bit application. I used _i486_x64_, which gives me an emulated 80486 processor, which should be good enough for most DOS tools.
 +
-image::ms-dos-player-binaries.png[]
+image:ms-dos-player-binaries.png[]
 +
 NOTE: The readme file states that the _i86_x64_ executable is faster than the others. So if your 16-bit application doesn't neet the features of the more powerful CPUs and you want maximum speed, use this one. Then again, even _i486_x64_ runs _much_ faster than DOSBox for me.
 
