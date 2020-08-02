@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Running 16-bit DOS CLI tools on Windows 10 64-bit (without DOSBox) | Daniel Wolf’s development blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Running 16-bit DOS CLI tools on Windows 10 64-bit (without DOSBox)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently found a real treasure: An archive containing many of the tools used at Sierra On-Line to create their games. All of these are 16-bit DOS command-line tools. So I opened a command prompt and tried to run one of them. Only to receive this message:" />
+<meta property="og:description" content="I recently found a real treasure: An archive containing many of the tools used at Sierra On-Line to create their games. All of these are 16-bit DOS command-line tools. So I opened a command prompt and tried to run one of them. Only to receive this message:" />
+<link rel="canonical" href="https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html" />
+<meta property="og:url" content="https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html" />
+<meta property="og:site_name" content="Daniel Wolf’s development blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-04T00:00:00+00:00" />
+<script type="application/ld+json">
+{"headline":"Running 16-bit DOS CLI tools on Windows 10 64-bit (without DOSBox)","dateModified":"2020-07-04T00:00:00+00:00","datePublished":"2020-07-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html"},"url":"https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html","description":"I recently found a real treasure: An archive containing many of the tools used at Sierra On-Line to create their games. All of these are 16-bit DOS command-line tools. So I opened a command prompt and tried to run one of them. Only to receive this message:","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://danielswolf.github.io//feed.xml" title="Daniel Wolf's development blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Daniel Wolf&#39;s development blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Running 16-bit DOS CLI tools on Windows 10 64-bit (without DOSBox)</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-07-04T00:00:00+00:00" itemprop="datePublished">Jul 4, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <div class="paragraph">
+<p>I recently found a real treasure: <a href="http://sciprogramming.com/community/index.php?topic=1631.0">An archive</a> containing many of the tools used at Sierra On-Line to create their games. All of these are 16-bit DOS command-line tools. So I opened a command prompt and tried to run one of them. Only to receive this message:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>This version of C:\Documents\Sammlungen\Software\Multimedia\scitools\ATOS.EXE is not compatible with the version of Windows you&#8217;re running. Check your computer&#8217;s system information and then contact the software publisher.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/unsupported-16-bit-application.png" alt="Unsupported 16-Bit Application"></span></p>
+</div>
+<div class="paragraph">
+<p>A little googling informed me that while it is <a href="https://www.groovypost.com/howto/enable-16-bit-application-support-windows-10/">possible to natively run 16-bit applications</a> on <em>32-bit versions</em> of Windows 10, the same is not possible for 64-bit versions. And really, who uses a 32-bit Windows 10?</p>
+</div>
+<div class="paragraph">
+<p>The popular solutions seem to be DOSBox or a virtual machine. This is fine for games or tools that you rarely use. But I wanted to automate these tools by calling them from a script, along with other (32/64-bit) CLI tools on my machine. Neither DOSBox nor a virtual machine make it easy to do that.</p>
+</div>
+<div class="paragraph">
+<p>Finally, I found a tool called <em>MS-DOS Player for Win32-x64</em> by Takeda Toshiya. That&#8217;s exactly what I&#8217;d been looking for, and it&#8217;s been working great!</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how you use it:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <a href="http://takeda-toshiya.my.coocan.jp/msdos" class="bare">http://takeda-toshiya.my.coocan.jp/msdos</a>.</p>
+</li>
+<li>
+<p>Download the ZIP file (<em>msdos.zip</em>) and extract it.</p>
+</li>
+<li>
+<p>Within the <em>binaries</em> directory, you&#8217;ll find a number of subdirectories. These are various versions of the same tool. Each directory name first specifies the machine it emulates (8086/80286/80386/80486&#8230;&#8203;), then whether it&#8217;s a 32 or 64-bit application. I used <em>i486_x64</em>, which gives me an emulated 80486 processor, which should be good enough for most DOS tools.</p>
+<div class="paragraph">
+<p><span class="image"><img src="/images/ms-dos-player-binaries.png" alt="ms dos player binaries"></span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The readme file states that the <em>i86_x64</em> executable is faster than the others. So if your 16-bit application doesn&#8217;t neet the features of the more powerful CPUs and you want maximum speed, use this one. Then again, even <em>i486_x64</em> runs <em>much</em> faster than DOSBox for me.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Each directory contains a file called <em>msdos.exe</em>. To run any 16-bit application, pass it as an argument, like this: <code>msdos my-tool arg1 arg2&#8230;&#8203;</code></p>
+</li>
+<li>
+<p>For convenience, it might be a good idea to add the binary directory of your choice to your PATH variable.</p>
+</li>
+</ol>
+</div>
+  </div><div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html';
+      this.page.identifier = 'https://danielswolf.github.io//2020/07/04/running-16-bit-clis-on-64-bit-windows.html';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://dwolfdevblog.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><a class="u-url" href="/2020/07/04/running-16-bit-clis-on-64-bit-windows.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Daniel Wolf&#39;s development blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Daniel Wolf&#39;s development blog</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/DanielSWolf"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">DanielSWolf</span></a></li><li><a href="https://www.twitter.com/Daniel_S_Wolf"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">Daniel_S_Wolf</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Random thoughts of a software developer</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
