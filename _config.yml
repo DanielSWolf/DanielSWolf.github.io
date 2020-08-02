@@ -46,3 +46,5 @@ asciidoctor:
 
 disqus:
   shortname: dwolfdevblog
+
+show_excerpts: true
